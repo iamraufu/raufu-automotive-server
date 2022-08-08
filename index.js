@@ -282,6 +282,23 @@ client.connect(err => {
     })
   })
 
+  // get order by email
+  app.get('/order/:email', (req, res) => {
+    const email = req.params.email;
+    orderCollection.findOne({
+      email: email
+    }, (err, result) => {
+      err ? res.send({
+        status: false,
+        message: 'Error while getting order'
+      }) : res.send({
+        status: true,
+        message: 'Order fetched successfully',
+        order: result
+      })
+    })
+  })
+
   // update order
   app.patch('/order/:id', (req, res) => {
     const id = req.params.id;
