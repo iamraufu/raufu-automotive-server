@@ -282,11 +282,11 @@ client.connect(err => {
     })
   })
 
-  // get order by email
-  app.get('/order/:email', (req, res) => {
+  // get order by phone
+  app.get('/order/:phone', (req, res) => {
     const email = req.params.email;
     orderCollection.findOne({
-      email: email
+      phone: phone
     }, (err, result) => {
       err ? res.send({
         status: false,
