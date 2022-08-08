@@ -284,7 +284,7 @@ client.connect(err => {
 
   // get order by phone
   app.get('/order/:phone', (req, res) => {
-    const email = req.params.email;
+    const phone = req.params.phone;
     orderCollection.findOne({
       phone: phone
     }, (err, result) => {
