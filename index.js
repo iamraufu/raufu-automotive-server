@@ -19,13 +19,13 @@ app.get('/', (req, res) => {
 const userName = process.env.USER;
 const password = process.env.PASSWORD;
 
-const uri = `mongodb+srv://${userName}:${password}@eftykharrahman.lih5zus.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${userName}:${password}@cluster0.6slzlhs.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 client.connect(err => {
-  const userCollection = client.db("RaufuAutomative").collection("Users");
-  const mechanicCollection = client.db("RaufuAutomative").collection("Mechanics");
-  const orderCollection = client.db("RaufuAutomative").collection("Orders");
+  const userCollection = client.db("homecleaningserviceofbd").collection("Users");
+  const serviceBoyCollection = client.db("homecleaningserviceofbd").collection("ServiceBoys");
+  const orderCollection = client.db("homecleaningserviceofbd").collection("Orders");
 
   // register user 
   app.post('/register', (req, res) => {
@@ -128,7 +128,7 @@ client.connect(err => {
   // add new mechanic
   app.post('/mechanic', (req, res) => {
     const mechanicDetails = req.body;
-    mechanicCollection.insertOne(mechanicDetails, (err, result) => {
+    serviceBoyCollection.insertOne(mechanicDetails, (err, result) => {
       err ? res.send({
         status: false,
         message: 'Error while adding mechanic'
@@ -139,14 +139,14 @@ client.connect(err => {
     })
   })
 
-  // get all mechanics
-  app.get('/mechanics', (req, res) => {
-    mechanicCollection.find(
+  // get all ServiceBoys
+  app.get('/ServiceBoys', (req, res) => {
+    serviceBoyCollection.find(
       // {isActive: true}
     ).toArray((err, result) => {
       err ? res.send({
         status: false,
-        message: 'Error while getting mechanics'
+        message: 'Error while getting ServiceBoys'
       }) : res.send(result)
     })
   })
@@ -154,7 +154,7 @@ client.connect(err => {
   // get mechanic by id
   app.get('/mechanic/:id', (req, res) => {
     const id = req.params.id;
-    mechanicCollection.findOne({
+    serviceBoyCollection.findOne({
       _id: ObjectId(id)
     }, (err, result) => {
       err ? res.send({
@@ -168,7 +168,7 @@ client.connect(err => {
   app.patch('/mechanic/:id', (req, res) => {
     const id = req.params.id;
     const mechanicDetails = req.body;
-    mechanicCollection.updateOne({
+    serviceBoyCollection.updateOne({
       _id: ObjectId(id)
     }, {
       $set: mechanicDetails
@@ -186,7 +186,7 @@ client.connect(err => {
   // delete mechanic
   app.delete('/mechanic/:id', (req, res) => {
     const id = req.params.id;
-    mechanicCollection.deleteOne({
+    serviceBoyCollection.deleteOne({
       _id: ObjectId(id)
     }, (err, result) => {
       err ? res.send({
@@ -199,40 +199,40 @@ client.connect(err => {
     })
   })
 
-  // get all mechanics by category
-  app.get('/mechanics/:category', (req, res) => {
+  // get all ServiceBoys by category
+  app.get('/ServiceBoys/:category', (req, res) => {
     const category = req.params.category;
-    mechanicCollection.find({
+    serviceBoyCollection.find({
       category: category,
       isActive: true
     }).toArray((err, result) => {
       err ? res.send({
         status: false,
-        message: 'Error while getting mechanics'
+        message: 'Error while getting ServiceBoys'
       }) : res.send({
         status: true,
-        message: 'Mechanics fetched successfully',
-        mechanics: result
+        message: 'ServiceBoys fetched successfully',
+        ServiceBoys: result
       })
     })
   })
 
-  // get all mechanics by category and location
-  app.get('/mechanics/:category/:location', (req, res) => {
+  // get all ServiceBoys by category and location
+  app.get('/ServiceBoys/:category/:location', (req, res) => {
     const category = req.params.category;
     const location = req.params.location;
-    mechanicCollection.find({
+    serviceBoyCollection.find({
       category: category,
       location: location,
       isActive: true
     }).toArray((err, result) => {
       err ? res.send({
         status: false,
-        message: 'Error while getting mechanics'
+        message: 'Error while getting ServiceBoys'
       }) : res.send({
         status: true,
-        message: 'Mechanics fetched successfully',
-        mechanics: result
+        message: 'ServiceBoys fetched successfully',
+        ServiceBoys: result
       })
     })
   })
@@ -375,5 +375,5 @@ client.connect(err => {
 });
 
 app.listen(process.env.PORT || port, () => {
-  console.log(`Raufu Automotive Backend Running on port ${port}`)
+  console.log(`Service Boy Bangladesh Backend Running on port ${port}`)
 })
