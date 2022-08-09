@@ -16,10 +16,10 @@ app.get('/', (req, res) => {
   })
 })
 
-const userName = process.env.USER;
-const password = process.env.PASSWORD;
+// const userName = process.env.USER;
+// const password = process.env.PASSWORD;
 
-const uri = `mongodb+srv://${userName}:${password}@cluster0.6slzlhs.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://abid:rkw76MDhb7hkLPzL@cluster0.6slzlhs.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 client.connect(err => {
